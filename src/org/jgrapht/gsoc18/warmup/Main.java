@@ -1,6 +1,7 @@
 package org.jgrapht.gsoc18.warmup;
 
 import org.jgrapht.Graph;
+import org.jgrapht.alg.CycleDetector;
 import org.jgrapht.alg.NaiveLcaFinder;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
@@ -36,12 +37,11 @@ public final class Main {
         /* Read input parameters */
         if (args.length != 3) {
             System.out.println(
-                    "Java app needs three input parameters:\n" +
-                            " - path of .dot file\n" +
-                            " - name of person 1\n" +
-                            " - name of person 2"
+                "Java app needs three input parameters:\n" +
+                    " - path of .dot file\n" +
+                    " - name of person 1\n" +
+                    " - name of person 2"
             );
-            return;
         }
         File dotGraphInputFile = new File(args[0]);
         String person1 = args[1];
@@ -51,6 +51,7 @@ public final class Main {
         Graph<String, DefaultEdge> gotGraph = new SimpleDirectedGraph<>(DefaultEdge.class);
         importDOTGraph(gotGraph, dotGraphInputFile);
 
+        /* Check nodes are in the graph */
         if (!gotGraph.containsVertex(person1)) {
             System.out.println(person1 + " is not contained in the input graph");
             return;
@@ -60,14 +61,22 @@ public final class Main {
             return;
         }
 
+        /* Check the graph is acyclic */
+        CycleDetector<String, DefaultEdge> cd = new CycleDetector<>(gotGraph);
+        if (cd.detectCycles()) {
+            System.out.println("The input graph is not acyclic");
+            return;
+        }
+
+        /* Find one single Closest Common Ancestor of given input nodes */
+        // String lca = (String) lcaFinder.findLca(person1, person2);
+        // System.out.println(lca);
+
         /* Find set of Closest Common Ancestors of given input nodes */
         NaiveLcaFinder<String, DefaultEdge> lcaFinder = new NaiveLcaFinder<>(gotGraph);
         Set<String> lcas = lcaFinder.findLcas(person1, person2);
         System.out.println(lcas.toString());
 
-        /* Find one single Closest Common Ancestor of given input nodes */
-        // String lca = (String) lcaFinder.findLca(person1, person2);
-        // System.out.println(lca);
     }
 
     private static void importDOTGraph(Graph<String, DefaultEdge> graph, File inputFile) {
