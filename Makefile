@@ -14,10 +14,10 @@ all:
 	make run ${ARGS}
 
 compile:
-	javac -Xlint -cp $(JGT_DEMO) -d $(BIN) $(SRC)org/jgrapht/gsoc18/warmup/Main.java
+	javac -Xlint -cp $(JGT_CORE):$(JGT_IO) -d $(BIN) $(SRC)org/jgrapht/gsoc18/warmup/Main.java
 
 run:
-	java -cp $(BIN):$(JGT_DEMO) org.jgrapht.gsoc18.warmup.Main ${ARGS}
+	java -cp $(BIN):$(JGT_CORE):$(JGT_IO) org.jgrapht.gsoc18.warmup.Main ${ARGS}
 
 clean:
 	rm -rf $(BIN)* *.class
