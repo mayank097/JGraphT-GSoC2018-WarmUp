@@ -5,3 +5,6 @@ GSoC 2018 - JGraphT warmup exercise to familiarize with JGraphT library (can be 
 ```
 ./input/GOT.dot Jon Daenerys
 ```
+
+### NaiveLCAFinder - findLcas behavior
+The method seems to work only on DAGs. Issue disscussed <a href="https://github.com/jgrapht/jgrapht/issues/490">here</a>.
