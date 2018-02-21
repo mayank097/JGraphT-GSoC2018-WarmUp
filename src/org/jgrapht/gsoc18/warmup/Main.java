@@ -41,6 +41,7 @@ public final class Main {
                             " - name of person 1\n" +
                             " - name of person 2"
             );
+            return;
         }
         File dotGraphInputFile = new File(args[0]);
         String person1 = args[1];
