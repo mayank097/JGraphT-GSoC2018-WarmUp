@@ -41,6 +41,7 @@ public final class Main {
                             " - name of person 1\n" +
                             " - name of person 2"
             );
+            return;
         }
         File dotGraphInputFile = new File(args[0]);
         String person1 = args[1];
@@ -60,7 +61,7 @@ public final class Main {
         }
 
         /* Find set of Closest Common Ancestors of given input nodes */
-        NaiveLcaFinder lcaFinder = new NaiveLcaFinder(gotGraph);
+        NaiveLcaFinder<String, DefaultEdge> lcaFinder = new NaiveLcaFinder<>(gotGraph);
         Set<String> lcas = lcaFinder.findLcas(person1, person2);
         System.out.println(lcas.toString());
 
@@ -69,7 +70,7 @@ public final class Main {
         // System.out.println(lca);
     }
 
-    private static void importDOTGraph(Graph graph, File inputFile) {
+    private static void importDOTGraph(Graph<String, DefaultEdge> graph, File inputFile) {
         VertexProvider<String> vp = (label, attributes) -> label;
         EdgeProvider<String, DefaultEdge> ep = (from, to, label, attributes) -> new DefaultEdge();
         GraphImporter<String, DefaultEdge> importer = new DOTImporter<>(vp, ep);
